@@ -101,7 +101,7 @@ public class AdjListsGraph implements Graph {
         for (; vCount <= maxV; vCount++) {
             vEdjLists.add(null);
         }
-        if (!isAdj(v1, v2)) {
+        //if (!isAdj(v1, v2)) {
             if (vEdjLists.get(v1) == null) {
                 vEdjLists.set(v1, new LinkedList<>());
             }
@@ -114,7 +114,7 @@ public class AdjListsGraph implements Graph {
                 }
                 vEdjLists.get(v2).add(v1);
             }
-        }
+        //}
     }
 
     private int countingRemove(List<Integer> list, int v) {

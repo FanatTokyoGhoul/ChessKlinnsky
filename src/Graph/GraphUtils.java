@@ -14,8 +14,8 @@ public class GraphUtils {
             while (scanFile.hasNextLine()){
                 String[] arrayString = scanFile.nextLine().split(" ");
 
-                for(int i = 1; i < arrayString.length - 2; i++){
-                    digraph.addAdge(Integer.parseInt(arrayString[0]), Integer.parseInt(arrayString[i]));
+                for(int i = 1; i < arrayString.length; i++){
+                    digraph.addAdge(Integer.parseInt(arrayString[0]) - 1, Integer.parseInt(arrayString[i]) - 1);
                 }
 
             }
