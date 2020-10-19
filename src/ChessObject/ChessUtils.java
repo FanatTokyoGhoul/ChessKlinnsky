@@ -12,6 +12,11 @@ public class ChessUtils {
     static {
         toEdge.put("a5", 69);
         toEdge.put("b1", 16);
+        toEdge.put("b3", 37);
+        toEdge.put("c3", 27);
+        toEdge.put("c4", 38);
+        toEdge.put("c8", 82);
+        toEdge.put("d1", 4);
         toEdge.put("d2", 10);
         toEdge.put("d4", 28);
         toEdge.put("d6", 50);
@@ -24,18 +29,16 @@ public class ChessUtils {
         toEdge.put("g5", 31);
         toEdge.put("g6", 42);
         toEdge.put("g7", 53);
-        toEdge.put("e2", 5);
-        toEdge.put("e5", 29);
-        toEdge.put("e6", 40);
-        toEdge.put("e7", 51);
+        toEdge.put("h1", 8);
         toEdge.put("h2", 13);
         toEdge.put("h5", 43);
         toEdge.put("h6", 54);
+        toEdge.put("h7", 65);
         toEdge.put("i3", 32);
         toEdge.put("i4", 44);
-        toEdge.put("c3", 27);
-        toEdge.put("c4", 38);
+        toEdge.put("i8", 88);
         toEdge.put("k1", 24);
+        toEdge.put("k3", 45);
         toEdge.put("l5", 79);
     }
 
@@ -49,8 +52,95 @@ public class ChessUtils {
             return moveKnight(figure, moves, digraph, maps, isBlack);
         }else if(figure instanceof Rook){
             return moveRook(figure, moves, digraph, maps, isBlack);
+        }else if(figure instanceof Bishop){
+            return moveBishop(figure, moves, digraph, maps, isBlack);
         }
         System.out.println("You have chosen an empty cell!!");
+        return false;
+    }
+
+    private static boolean moveBishop(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack){
+        if (isBlack) {
+            return moveBlackBishop(figure, moves, digraph, maps);
+        } else {
+            return moveWhiteBishop(figure, moves, digraph, maps);
+        }
+    }
+
+    private static boolean moveWhiteBishop(Figure figure, String[] moves, Digraph digraph, Maps maps){
+        if (maps.getCellBlackFigure().get(figure) != null) {
+            System.out.println("This is not your figure!");
+            return false;
+        }
+        int nextStay = toEdge.get(moves[1]);
+        int nowStay = maps.getCellWhiteFigure().get(figure);
+        if(checkDiagonalLines(maps,digraph,nextStay,nowStay)){
+            if(maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null){
+                maps.moveFigure(figure, nextStay);
+                System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+                return true;
+            }else {
+                System.out.println("Your figure is standing here.");
+                return false;
+            }
+        }else {
+            System.out.println("The Bishop cannot go here.");
+            return false;
+        }
+    }
+
+    private static boolean moveBlackBishop(Figure figure, String[] moves, Digraph digraph, Maps maps){
+        if (maps.getCellWhiteFigure().get(figure) != null) {
+            System.out.println("This is not your figure!");
+            return false;
+        }
+        int nextStay = toEdge.get(moves[1]);
+        int nowStay = maps.getCellBlackFigure().get(figure);
+        if(checkDiagonalLines(maps,digraph,nextStay,nowStay)){
+            if(maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null){
+                maps.moveFigure(figure, nextStay);
+                System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+                return true;
+            }else {
+                System.out.println("Your figure is standing here.");
+                return false;
+            }
+        }else {
+            System.out.println("The Bishop cannot go here.");
+            return false;
+        }
+    }
+
+    private static boolean checkDiagonalLines(Maps maps,Digraph digraph, int nextStay, int nowStay){
+        int bufferNowStay;
+        for(int i = 0; i < 6; i++){
+            bufferNowStay = nowStay;
+            do{
+                switch (i){
+                    case 0:
+                        bufferNowStay = digraph.getUpRight(digraph.getUp(bufferNowStay));
+                        break;
+                    case 1:
+                        bufferNowStay = digraph.getUpLeft(digraph.getUp(bufferNowStay));
+                        break;
+                    case 2:
+                        bufferNowStay = digraph.getDownRight(digraph.getUpRight(bufferNowStay));
+                        break;
+                    case 3:
+                        bufferNowStay = digraph.getDownLeft(digraph.getUpLeft(bufferNowStay));
+                        break;
+                    case 4:
+                        bufferNowStay = digraph.getDownLeft(digraph.getDown(bufferNowStay));
+                        break;
+                    case 5:
+                        bufferNowStay = digraph.getDownRight(digraph.getDown(bufferNowStay));
+                        break;
+                }
+                if(bufferNowStay == nextStay){
+                    return true;
+                }
+            } while (maps.getFigures().get(bufferNowStay) == null && bufferNowStay != -1);
+        }
         return false;
     }
 
