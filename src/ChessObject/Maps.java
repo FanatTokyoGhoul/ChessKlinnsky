@@ -19,8 +19,8 @@ public class Maps {
     }
 
     private void test(){
-        addFigureOnBoardWhite(new Pawn(true), 28);
-        addFigureOnBoardBlack(new Pawn(false), 40);
+        addFigureOnBoardWhite(new Knight(true), 20);
+        addFigureOnBoardWhite(new Pawn(true), 50);
     }
 
     public void moveFigure(Figure figure, int edge){

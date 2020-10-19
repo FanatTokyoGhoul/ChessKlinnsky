@@ -5,7 +5,6 @@ public class Main {
         Board board =  new Board();
         System.out.println(board.toString());
         board.test();
-        System.out.println(board.toString());
 
     }
 }
