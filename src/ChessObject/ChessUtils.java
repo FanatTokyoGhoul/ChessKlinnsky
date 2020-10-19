@@ -45,7 +45,14 @@ public class ChessUtils {
     public static boolean moveFigure(String move, Digraph digraph, Maps maps, boolean isBlack) {
         move = move.toLowerCase();
         String[] moves = move.split(" ");
+
+        if(toEdge.get(moves[1]) == null || toEdge.get(moves[0]) == null){
+            System.out.println("You have selected a non-existing coordinate.");
+            return false;
+        }
+
         Figure figure = maps.getFigures().get(toEdge.get(moves[0]));
+
         if (figure instanceof Pawn) {
             return movePawn(figure, moves, digraph, maps, isBlack);
         }else if(figure instanceof Knight){
@@ -54,9 +61,64 @@ public class ChessUtils {
             return moveRook(figure, moves, digraph, maps, isBlack);
         }else if(figure instanceof Bishop){
             return moveBishop(figure, moves, digraph, maps, isBlack);
+        }else if(figure instanceof Queen){
+            return moveQueen(figure, moves, digraph, maps, isBlack);
         }
+
         System.out.println("You have chosen an empty cell!!");
         return false;
+    }
+
+    private static boolean moveQueen(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack){
+        if (isBlack) {
+            return moveBlackQueen(figure, moves, digraph, maps);
+        } else {
+            return moveWhiteQueen(figure, moves, digraph, maps);
+        }
+    }
+
+    private static boolean moveWhiteQueen(Figure figure, String[] moves, Digraph digraph, Maps maps){
+        if (maps.getCellBlackFigure().get(figure) != null) {
+            System.out.println("This is not your figure!");
+            return false;
+        }
+        int nextStay = toEdge.get(moves[1]);
+        int nowStay = maps.getCellWhiteFigure().get(figure);
+        if(checkDiagonalLines(maps,digraph,nextStay,nowStay) || checkHorizontalAndVerticalLines(maps,digraph,nextStay,nowStay)){
+            if(maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null){
+                maps.moveFigure(figure, nextStay);
+                System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+                return true;
+            }else {
+                System.out.println("Your figure is standing here.");
+                return false;
+            }
+        }else {
+            System.out.println("The Bishop cannot go here.");
+            return false;
+        }
+    }
+
+    private static boolean moveBlackQueen(Figure figure, String[] moves, Digraph digraph, Maps maps){
+        if (maps.getCellWhiteFigure().get(figure) != null) {
+            System.out.println("This is not your figure!");
+            return false;
+        }
+        int nextStay = toEdge.get(moves[1]);
+        int nowStay = maps.getCellBlackFigure().get(figure);
+        if(checkDiagonalLines(maps,digraph,nextStay,nowStay) || checkHorizontalAndVerticalLines(maps,digraph,nextStay,nowStay)){
+            if(maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null){
+                maps.moveFigure(figure, nextStay);
+                System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+                return true;
+            }else {
+                System.out.println("Your figure is standing here.");
+                return false;
+            }
+        }else {
+            System.out.println("The Bishop cannot go here.");
+            return false;
+        }
     }
 
     private static boolean moveBishop(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack){

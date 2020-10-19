@@ -17,7 +17,7 @@ public class Board {
     }
 
     public void test(){
-        boolean test = ChessUtils.moveFigure( "f5 h7", board, maps, false);
+        boolean test = ChessUtils.moveFigure( "f5 f12", board, maps, false);
         System.out.println(this.toString());
         System.out.println(test);
     }
