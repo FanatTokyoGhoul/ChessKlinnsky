@@ -1,14 +1,14 @@
 package ChessObject;
 
 public class Rook implements Figure {
-    private boolean isBlack;
+    private boolean isWhite;
 
-    public Rook(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Rook(boolean isWhite) {
+        this.isWhite = isWhite;
     }
 
     @Override
     public String toString() {
-        return isBlack ? "♜":"♖";
+        return isWhite ? "♜":"♖";
     }
 }

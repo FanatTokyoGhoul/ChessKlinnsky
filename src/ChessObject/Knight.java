@@ -1,14 +1,14 @@
 package ChessObject;
 
 public class Knight implements Figure{
-    private boolean isBlack;
+    private boolean isWhite;
 
     public Knight(boolean isBlack) {
-        this.isBlack = isBlack;
+        this.isWhite = isBlack;
     }
 
     @Override
     public String toString() {
-        return isBlack ? "♞":"♘";
+        return isWhite ? "♞":"♘";
     }
 }

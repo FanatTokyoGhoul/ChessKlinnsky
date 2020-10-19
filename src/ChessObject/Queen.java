@@ -1,14 +1,14 @@
 package ChessObject;
 
 public class Queen implements Figure{
-    private boolean isBlack;
+    private boolean isWhite;
 
-    public Queen(boolean isBlack) {
-        this.isBlack = isBlack;
+    public Queen(boolean isWhite) {
+        this.isWhite = isWhite;
     }
 
     @Override
     public String toString() {
-        return isBlack ? "♛":"♕";
+        return isWhite ? "♛":"♕";
     }
 }
