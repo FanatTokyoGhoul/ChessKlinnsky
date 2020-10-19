@@ -9,7 +9,7 @@ public class Maps {
     private Map<Integer, Figure> blackFigure = new HashMap<>();
     private Map<Integer, Figure> whiteFigure = new HashMap<>();
     private Map<Figure, Integer> cellWhiteFigure = new HashMap<>();
-    private Map<Figure, Integer> cellBlackFigure =  new HashMap<>();
+    private Map<Figure, Integer> cellBlackFigure = new HashMap<>();
     private Map<Integer, Figure> figures = new HashMap<>();
     private Map<Figure, Integer> cellFigures = new HashMap<>();
 
@@ -18,13 +18,27 @@ public class Maps {
         //createChess();
     }
 
-    private void test(){
-        addFigureOnBoardWhite(new Bishop(true), 20);
+    private void test() {
+        addFigureOnBoardBlack(new Pawn(false), 52);
         addFigureOnBoardBlack(new Pawn(false), 65);
     }
 
-    public void moveFigure(Figure figure, int edge){
-        if(cellBlackFigure.get(figure) != null) {
+    public void setFigure(Figure figure, int edge) {
+        if (cellBlackFigure.get(figure) != null) {
+            cellBlackFigure.put(figure, edge);
+            cellFigures.put(figure, edge);
+            blackFigure.put(edge, figure);
+            figures.put(edge, figure);
+        }else{
+            cellWhiteFigure.put(figure, edge);
+            cellFigures.put(figure, edge);
+            whiteFigure.put(edge, figure);
+            figures.put(edge, figure);
+        }
+    }
+
+    public void moveFigure(Figure figure, int edge) {
+        if (cellBlackFigure.get(figure) != null) {
             int nowStay = cellBlackFigure.get(figure);
             cellBlackFigure.remove(figure);
             cellFigures.remove(figure);
@@ -32,9 +46,9 @@ public class Maps {
             figures.remove(nowStay);
             cellBlackFigure.put(figure, edge);
             cellFigures.put(figure, edge);
-            blackFigure.put(edge,figure);
-            figures.put(edge,figure);
-        }else {
+            blackFigure.put(edge, figure);
+            figures.put(edge, figure);
+        } else {
             int nowStay = cellWhiteFigure.get(figure);
             cellWhiteFigure.remove(figure);
             cellFigures.remove(figure);
@@ -42,12 +56,12 @@ public class Maps {
             figures.remove(nowStay);
             cellWhiteFigure.put(figure, edge);
             cellFigures.put(figure, edge);
-            whiteFigure.put(edge,figure);
-            figures.put(edge,figure);
+            whiteFigure.put(edge, figure);
+            figures.put(edge, figure);
         }
     }
 
-    private void createChess(){
+    private void createChess() {
         addFigureOnBoardWhite(new Pawn(true), 16);
         addFigureOnBoardWhite(new Pawn(true), 17);
         addFigureOnBoardWhite(new Pawn(true), 18);
@@ -86,18 +100,18 @@ public class Maps {
         addFigureOnBoardBlack(new Bishop(false), 63);
     }
 
-    private void addFigureOnBoardBlack(Figure figure, int edge){
+    private void addFigureOnBoardBlack(Figure figure, int edge) {
         blackFigure.put(edge, figure);
-        cellBlackFigure.put(figure,edge);
+        cellBlackFigure.put(figure, edge);
         figures.put(edge, figure);
-        cellFigures.put(figure,edge);
+        cellFigures.put(figure, edge);
     }
 
-    private void addFigureOnBoardWhite(Figure figure, int edge){
+    private void addFigureOnBoardWhite(Figure figure, int edge) {
         whiteFigure.put(edge, figure);
-        cellWhiteFigure.put(figure,edge);
+        cellWhiteFigure.put(figure, edge);
         figures.put(edge, figure);
-        cellFigures.put(figure,edge);
+        cellFigures.put(figure, edge);
     }
 
     public Map<Integer, Figure> getBlackFigure() {
