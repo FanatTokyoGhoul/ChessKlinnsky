@@ -1,4 +1,4 @@
-package ChessObject;
+package chess_object;
 
 public class Bishop implements Figure{
     private boolean isWhite;

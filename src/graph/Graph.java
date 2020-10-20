@@ -1,9 +1,7 @@
-package Graph;
+package graph;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
-import javax.management.Query;
 
 /**
  * Интерфейс для описания неориентированного графа (н-графа)

@@ -1,4 +1,4 @@
-package Graph;
+package graph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ public class GraphUtils {
     public static Digraph digraphParser(){
         Digraph digraph = new AdjListsDigraph();
         try {
-            Scanner scanFile = new Scanner(new FileReader(new File("./Graph/Graph.txt")));
+            Scanner scanFile = new Scanner(new FileReader(new File("Graph/Graph.txt")));
             while (scanFile.hasNextLine()){
                 String[] arrayString = scanFile.nextLine().split(" ");
 

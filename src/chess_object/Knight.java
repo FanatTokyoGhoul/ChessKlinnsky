@@ -1,10 +1,10 @@
-package ChessObject;
+package chess_object;
 
 public class Knight implements Figure{
     private boolean isWhite;
 
-    public Knight(boolean isBlack) {
-        this.isWhite = isBlack;
+    public Knight(boolean isWhite) {
+        this.isWhite = isWhite;
     }
 
     @Override

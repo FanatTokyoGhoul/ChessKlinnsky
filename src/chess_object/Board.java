@@ -1,12 +1,7 @@
-package ChessObject;
+package chess_object;
 
-import Graph.AdjListsGraph;
-import Graph.Digraph;
-import Graph.Graph;
-import Graph.GraphUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import graph.Digraph;
+import graph.GraphUtils;
 
 public class Board {
     private Digraph board;
@@ -17,7 +12,7 @@ public class Board {
     }
 
     public void test(){
-        boolean test = ChessUtils.moveFigure( "f8 f6", board, maps, true);
+        boolean test = ChessUtils.isMate(true, maps, board);
         System.out.println(this.toString());
         System.out.println(test);
     }

@@ -1,6 +1,6 @@
-package Graph;
+package graph;
 
-import ChessObject.Figure;
+import chess_object.Figure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class AdjListsGraphChess extends AdjListsGraph {
     private Map<Integer, Figure> blackFigure = new HashMap<>();
@@ -22,7 +21,7 @@ public class AdjListsGraphChess extends AdjListsGraph {
 
     private void parser(){
         try {
-           Scanner scanFile = new Scanner(new FileReader(new File("./Graph/Graph.txt")));
+           Scanner scanFile = new Scanner(new FileReader(new File("graph/Graph.txt")));
             while (scanFile.hasNextLine()){
                 String[] arrayString = scanFile.nextLine().split(" ");
 

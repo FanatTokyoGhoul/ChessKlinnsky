@@ -1,4 +1,4 @@
-package ChessObject;
+package chess_object;
 
 public class Cell {
     private Figure figure;

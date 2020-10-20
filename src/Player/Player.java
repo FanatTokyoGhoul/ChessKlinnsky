@@ -1,7 +1,7 @@
 package Player;
 
-import ChessObject.Figure;
-import Graph.Digraph;
+import chess_object.Figure;
+import graph.Digraph;
 
 import java.util.Map;
 

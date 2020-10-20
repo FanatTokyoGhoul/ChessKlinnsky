@@ -1,119 +1,167 @@
-package ChessObject;
+package chess_object;
 
-import Graph.Digraph;
+import constant.Constant;
+import graph.Digraph;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+
+/**
+ * Service class in which the movement of chess pieces is implemented
+ **/
 
 public class ChessUtils {
 
-    private static final Map<String, Integer> toEdge = new HashMap<>();
+    public static boolean isMate(boolean isBlack, Maps maps, Digraph digraph) {
+        Figure king = null;
+        Map<Figure, Integer> cellAttackingSide = isBlack ? maps.getCellBlackFigure() : maps.getCellWhiteFigure();
+        Map<Integer, Figure> attackingSide = isBlack ? maps.getBlackFigure() : maps.getWhiteFigure();
+        Map<Figure, Integer> cellDefenderSide = isBlack ? maps.getCellWhiteFigure() : maps.getCellBlackFigure();
+        Map<Integer, Figure> defenderSide = isBlack ? maps.getWhiteFigure() : maps.getBlackFigure();
 
-    static {
-        toEdge.put("a1", 25);
-        toEdge.put("a2", 36);
-        toEdge.put("a3", 47);
-        toEdge.put("a4", 59);
-        toEdge.put("a5", 69);
-        toEdge.put("a6", 80);
-        toEdge.put("b1", 16);
-        toEdge.put("b2", 26);
-        toEdge.put("b3", 37);
-        toEdge.put("b4", 48);
-        toEdge.put("b5", 59);
-        toEdge.put("b6", 70);
-        toEdge.put("b7", 81);
-        toEdge.put("c1", 9);
-        toEdge.put("c2", 17);
-        toEdge.put("c3", 27);
-        toEdge.put("c4", 38);
-        toEdge.put("c5", 49);
-        toEdge.put("c6", 60);
-        toEdge.put("c7", 71);
-        toEdge.put("c8", 82);
-        toEdge.put("d1", 4);
-        toEdge.put("d2", 10);
-        toEdge.put("d3", 18);
-        toEdge.put("d4", 28);
-        toEdge.put("d5", 39);
-        toEdge.put("d6", 50);
-        toEdge.put("d7", 61);
-        toEdge.put("d8", 72);
-        toEdge.put("d9", 83);
-        toEdge.put("e1", 1);
-        toEdge.put("e2", 5);
-        toEdge.put("e3", 11);
-        toEdge.put("e4", 19);
-        toEdge.put("e5", 29);
-        toEdge.put("e6", 40);
-        toEdge.put("e7", 51);
-        toEdge.put("e8", 62);
-        toEdge.put("e9", 73);
-        toEdge.put("e10", 84);
-        toEdge.put("f1", 0);
-        toEdge.put("f2", 2);
-        toEdge.put("f3", 6);
-        toEdge.put("f4", 12);
-        toEdge.put("f5", 20);
-        toEdge.put("f6", 30);
-        toEdge.put("f7", 41);
-        toEdge.put("f8", 52);
-        toEdge.put("f9", 63);
-        toEdge.put("f10", 74);
-        toEdge.put("f11", 85);
-        toEdge.put("g1", 3);
-        toEdge.put("g2", 7);
-        toEdge.put("g3", 13);
-        toEdge.put("g4", 21);
-        toEdge.put("g5", 31);
-        toEdge.put("g6", 42);
-        toEdge.put("g7", 53);
-        toEdge.put("g8", 64);
-        toEdge.put("g9", 75);
-        toEdge.put("g10", 86);
-        toEdge.put("h1", 8);
-        toEdge.put("h2", 13);
-        toEdge.put("h3", 22);
-        toEdge.put("h4", 32);
-        toEdge.put("h5", 43);
-        toEdge.put("h6", 54);
-        toEdge.put("h7", 65);
-        toEdge.put("h8", 76);
-        toEdge.put("h9", 87);
-        toEdge.put("i1", 15);
-        toEdge.put("i2", 23);
-        toEdge.put("i3", 32);
-        toEdge.put("i4", 44);
-        toEdge.put("i5", 55);
-        toEdge.put("i6", 66);
-        toEdge.put("i7", 77);
-        toEdge.put("i8", 88);
-        toEdge.put("k1", 24);
-        toEdge.put("k2", 34);
-        toEdge.put("k3", 45);
-        toEdge.put("k4", 56);
-        toEdge.put("k5", 67);
-        toEdge.put("k6", 78);
-        toEdge.put("k7", 89);
-        toEdge.put("l1", 35);
-        toEdge.put("l2", 46);
-        toEdge.put("l3", 57);
-        toEdge.put("l4", 68);
-        toEdge.put("l5", 79);
-        toEdge.put("l6", 90);
+
+        for (Map.Entry<Figure, Integer> keyAndValue : cellDefenderSide.entrySet()) {
+            if (keyAndValue.getKey() instanceof King) {
+                king = keyAndValue.getKey();
+                break;
+            }
+        }
+
+        Figure attackedKnight = null;
+        List<Figure> attackFigure = new ArrayList<>();
+
+        for (Map.Entry<Figure, Integer> keyAndValue : cellAttackingSide.entrySet()) {
+            if (cellIsAttacked(keyAndValue.getKey(), cellAttackingSide.get(keyAndValue.getKey()), digraph, maps, cellDefenderSide.get(king))) {
+                if (keyAndValue.getKey() instanceof Knight) {
+                    attackedKnight = keyAndValue.getKey();
+                }
+                attackFigure.add(keyAndValue.getKey());
+            }
+        }
+
+        if (attackFigure.size() == 0) {
+            return false;
+        }
+
+        if (attackFigure.size() > 1) {
+            return true;
+        }
+
+        if (attackedKnight != null) {
+            for (Map.Entry<Figure, Integer> keyAndValue : cellDefenderSide.entrySet()) {
+                return !cellIsAttacked(keyAndValue.getKey(), cellDefenderSide.get(keyAndValue.getKey()), digraph, maps, cellAttackingSide.get(attackedKnight));
+            }
+        }
+
+        List<Integer> edgeWhereTheKingCanGo = checkEdgeWhereTheKingCanGo(maps, digraph, cellDefenderSide.get(king));
+
+        for (Map.Entry<Figure, Integer> keyAndValue : cellAttackingSide.entrySet()) {
+            edgeWhereTheKingCanGo.removeIf(edge -> cellIsAttacked(keyAndValue.getKey(), cellAttackingSide.get(keyAndValue.getKey()), digraph, maps, edge));
+        }
+
+        if (edgeWhereTheKingCanGo.size() > 0) {
+            return false;
+        }
+
+        List<Integer> directionAttackKing = checkDirection(attackFigure.get(0), cellAttackingSide.get(attackFigure.get(0)), digraph, maps, cellDefenderSide.get(king));
+
+        for (Map.Entry<Figure, Integer> keyAndValue : cellDefenderSide.entrySet()) {
+            for(Integer edge: directionAttackKing) {
+                if(cellIsAttacked(keyAndValue.getKey(), cellDefenderSide.get(keyAndValue.getKey()), digraph, maps, edge)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
+    private static List<Integer> checkDirection(Figure figure, int nowStay, Digraph digraph, Maps maps, int nextStay){
+        if (figure instanceof Rook) {
+            return getDirectionHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay);
+        } else if (figure instanceof Bishop) {
+            return getDirectionDiagonalLines(maps, digraph, nextStay, nowStay);
+        } else if (figure instanceof Queen) {
+            List<Integer> bufferedList = getDirectionDiagonalLines(maps, digraph, nextStay, nowStay);
+            if(bufferedList.size() > 0){
+                return bufferedList;
+            }else {
+                return getDirectionHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay);
+            }
+        }
+        return null;
+    }
+
+    private static boolean cellIsAttacked(Figure figure, int nowStay, Digraph digraph, Maps maps, int nextStay) {
+        if (figure instanceof Pawn) {
+            return digraph.getUpRight(digraph.getUp(nowStay)) == nextStay || digraph.getUpLeft(digraph.getUp(nowStay)) == nextStay;
+        } else if (figure instanceof Knight) {
+            return knightCanMove(digraph, nowStay, nextStay);
+        } else if (figure instanceof Rook) {
+            return checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay);
+        } else if (figure instanceof Bishop) {
+            return checkDiagonalLines(maps, digraph, nextStay, nowStay);
+        } else if (figure instanceof Queen) {
+            return checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay) || checkDiagonalLines(maps, digraph, nextStay, nowStay);
+        }
+        return false;
+    }
+
+    private static List<Integer> checkEdgeWhereTheKingCanGo(Maps maps, Digraph digraph, int nowStay) {
+        List<Integer> edgeWhereTheKingCanGo = new ArrayList<>();
+
+        if (digraph.getUp(nowStay) != -1 && maps.getFigures().get(digraph.getUp(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUp(nowStay));
+        }
+        if (digraph.getUpRight(nowStay) != -1 && maps.getFigures().get(digraph.getUpRight(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpRight(nowStay));
+        }
+        if (digraph.getDownRight(nowStay) != -1 && maps.getFigures().get(digraph.getDownRight(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getDownRight(nowStay));
+        }
+        if (digraph.getDownLeft(nowStay) != -1 && maps.getFigures().get(digraph.getDownLeft(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getDownLeft(nowStay));
+        }
+        if (digraph.getUpLeft(nowStay) != -1 && maps.getFigures().get(digraph.getUpLeft(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpLeft(nowStay));
+        }
+        if (digraph.getDown(nowStay) != -1 && maps.getFigures().get(digraph.getDown(nowStay)) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getDown(nowStay));
+        }
+        if (digraph.getDown(digraph.getDownLeft(nowStay)) != -1 && maps.getFigures().get(digraph.getDown(digraph.getDownLeft(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getDown(digraph.getDownLeft(nowStay)));
+        }
+        if (digraph.getDown(digraph.getDownRight(nowStay)) != -1 && maps.getFigures().get(digraph.getDown(digraph.getDownRight(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getDown(digraph.getDownRight(nowStay)));
+        }
+        if (digraph.getUpRight(digraph.getDownRight(nowStay)) != -1 && maps.getFigures().get(digraph.getUpRight(digraph.getDownRight(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpRight(digraph.getDownRight(nowStay)));
+        }
+        if (digraph.getUpLeft(digraph.getDownLeft(nowStay)) != -1 && maps.getFigures().get(digraph.getUpLeft(digraph.getDownLeft(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpLeft(digraph.getDownLeft(nowStay)));
+        }
+        if (digraph.getUpRight(digraph.getUp(nowStay)) != -1 && maps.getFigures().get(digraph.getUpRight(digraph.getUp(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpRight(digraph.getUp(nowStay)));
+        }
+        if (digraph.getUpLeft(digraph.getUp(nowStay)) != -1 && maps.getFigures().get(digraph.getUpLeft(digraph.getUp(nowStay))) == null) {
+            edgeWhereTheKingCanGo.add(digraph.getUpLeft(digraph.getUp(nowStay)));
+        }
+        return edgeWhereTheKingCanGo;
+    }
+
+    /**
+     * In this method, we find out which instance of the class we got and, depending on this,
+     * select the logic of the figure's move
+     **/
     public static boolean moveFigure(String move, Digraph digraph, Maps maps, boolean isBlack) {
         move = move.toLowerCase();
         String[] moves = move.split(" ");
 
-        if (toEdge.get(moves[1]) == null || toEdge.get(moves[0]) == null) {
-            System.out.println("You have selected a non-existing coordinate.");
-            return false;
+        if (Constant.toEdge(moves[1]) == null || Constant.toEdge(moves[0]) == null) { //Check in case we are given a
+            System.out.println("You have selected a non-existing coordinate.");       //coordinate which does not exist
+            return false;                                                             //whose coordinate does not exist
         }
 
-        Figure figure = maps.getFigures().get(toEdge.get(moves[0]));
+        Figure figure = maps.getFigures().get(Constant.toEdge(moves[0]));
 
         if (figure instanceof Pawn) {
             return movePawn(figure, moves, digraph, maps, isBlack);
@@ -133,6 +181,12 @@ public class ChessUtils {
         return false;
     }
 
+    /**
+     * Logic for the king. For black and white, the logic is not very different.
+     * The bottom line is that we check all possible directions in which the king
+     * can go with the condition that the length of the step e is greater than 1
+     **/
+
     private static boolean moveKing(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
             return moveBlackKing(figure, moves, digraph, maps);
@@ -146,7 +200,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellWhiteFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay, true) || checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay, true)) {
             if (maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null) {
@@ -168,7 +222,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellBlackFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay, true) || checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay, true)) {
             if (maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null) {
@@ -185,6 +239,10 @@ public class ChessUtils {
         }
     }
 
+    /**
+     * The logic of the queen is no different from the king. Only without the condition that the length is less than 1
+     **/
+
     private static boolean moveQueen(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
             return moveBlackQueen(figure, moves, digraph, maps);
@@ -198,7 +256,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellWhiteFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay) || checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null) {
@@ -220,7 +278,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellBlackFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay) || checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null) {
@@ -237,6 +295,10 @@ public class ChessUtils {
         }
     }
 
+    /**
+     * The logic does not differ from the queen only without checking for horizontal steps
+     **/
+
     private static boolean moveBishop(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
             return moveBlackBishop(figure, moves, digraph, maps);
@@ -250,7 +312,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellWhiteFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null) {
@@ -272,7 +334,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellBlackFigure().get(figure);
         if (checkDiagonalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null) {
@@ -288,6 +350,12 @@ public class ChessUtils {
             return false;
         }
     }
+
+    /**
+     * Checking diagonal lines for moveability. Simply by the brute force method,
+     * we iterate over all the problems in which the figure can reach and if oa can reach the same coordinate,
+     * then we return true. isKing is limited to the ability to walk more than 1 time. Needed for the king.
+     **/
 
     private static boolean checkDiagonalLines(Maps maps, Digraph digraph, int nextStay, int nowStay) {
         return checkDiagonalLines(maps, digraph, nextStay, nowStay, false);
@@ -346,6 +414,10 @@ public class ChessUtils {
         return false;
     }
 
+    /**
+     * The logic is no different from the officer. Only vertical and porousotal lines are checked
+     **/
+
     private static boolean moveRook(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
             return moveBlackRook(figure, moves, digraph, maps);
@@ -359,7 +431,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellWhiteFigure().get(figure);
         if (checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null) {
@@ -381,7 +453,7 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellBlackFigure().get(figure);
         if (checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay)) {
             if (maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null) {
@@ -398,6 +470,9 @@ public class ChessUtils {
         }
     }
 
+    /**
+     * Same as for diagonal lines, only for vertical and horizontal
+     **/
     private static boolean checkHorizontalAndVerticalLines(Maps maps, Digraph digraph, int nextStay, int nowStay) {
         return checkHorizontalAndVerticalLines(maps, digraph, nextStay, nowStay, false);
     }
@@ -455,6 +530,10 @@ public class ChessUtils {
         return false;
     }
 
+    /**
+     * The knight can only move to 12 defined points. So all these points are just checked here
+     **/
+
     private static boolean moveKnight(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
             return moveBlackKnight(figure, moves, digraph, maps);
@@ -468,20 +547,9 @@ public class ChessUtils {
             System.out.println("This is not your figure!");
             return false;
         }
-        int nextStay = toEdge.get(moves[1]);
+        int nextStay = Constant.toEdge(moves[1]);
         int nowStay = maps.getCellWhiteFigure().get(figure);
-        if (digraph.getUpRight(digraph.getUp(digraph.getUp(nowStay))) == nextStay ||
-                digraph.getUpLeft(digraph.getUp(digraph.getUp(nowStay))) == nextStay ||
-                digraph.getUp(digraph.getUpRight(digraph.getUpRight(nowStay))) == nextStay ||
-                digraph.getDownRight(digraph.getUpRight(digraph.getUpRight(nowStay))) == nextStay ||
-                digraph.getUp(digraph.getUpLeft(digraph.getUpLeft(nowStay))) == nextStay ||
-                digraph.getDownLeft(digraph.getUpLeft(digraph.getUpLeft(nowStay))) == nextStay ||
-                digraph.getDownLeft(digraph.getDown(digraph.getDown(nowStay))) == nextStay ||
-                digraph.getDownRight(digraph.getDown(digraph.getDown(nowStay))) == nextStay ||
-                digraph.getUpLeft(digraph.getDownLeft(digraph.getDownLeft(nowStay))) == nextStay ||
-                digraph.getDown(digraph.getDownLeft(digraph.getDownLeft(nowStay))) == nextStay ||
-                digraph.getUp(digraph.getDownRight(digraph.getDownRight(nowStay))) == nextStay ||
-                digraph.getDownLeft(digraph.getDownRight(digraph.getDownRight(nowStay))) == nextStay) {
+        if (knightCanMove(digraph, nowStay, nextStay)) {
             if (maps.getBlackFigure().get(nextStay) != null || maps.getWhiteFigure().get(nextStay) == null) {
                 maps.moveFigure(figure, nextStay);
                 System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
@@ -495,14 +563,8 @@ public class ChessUtils {
         return false;
     }
 
-    private static boolean moveBlackKnight(Figure figure, String[] moves, Digraph digraph, Maps maps) {
-        if (maps.getCellWhiteFigure().get(figure) != null) {
-            System.out.println("This is not your figure!");
-            return false;
-        }
-        int nextStay = toEdge.get(moves[1]);
-        int nowStay = maps.getCellBlackFigure().get(figure);
-        if (digraph.getUpRight(digraph.getUp(digraph.getUp(nowStay))) == nextStay ||
+    private static boolean knightCanMove(Digraph digraph, int nowStay, int nextStay) {
+        return digraph.getUpRight(digraph.getUp(digraph.getUp(nowStay))) == nextStay ||
                 digraph.getUpLeft(digraph.getUp(digraph.getUp(nowStay))) == nextStay ||
                 digraph.getUp(digraph.getUpRight(digraph.getUpRight(nowStay))) == nextStay ||
                 digraph.getDownRight(digraph.getUpRight(digraph.getUpRight(nowStay))) == nextStay ||
@@ -513,7 +575,17 @@ public class ChessUtils {
                 digraph.getUpLeft(digraph.getDownLeft(digraph.getDownLeft(nowStay))) == nextStay ||
                 digraph.getDown(digraph.getDownLeft(digraph.getDownLeft(nowStay))) == nextStay ||
                 digraph.getUp(digraph.getDownRight(digraph.getDownRight(nowStay))) == nextStay ||
-                digraph.getDownLeft(digraph.getDownRight(digraph.getDownRight(nowStay))) == nextStay) {
+                digraph.getDownLeft(digraph.getDownRight(digraph.getDownRight(nowStay))) == nextStay;
+    }
+
+    private static boolean moveBlackKnight(Figure figure, String[] moves, Digraph digraph, Maps maps) {
+        if (maps.getCellWhiteFigure().get(figure) != null) {
+            System.out.println("This is not your figure!");
+            return false;
+        }
+        int nextStay = Constant.toEdge(moves[1]);
+        int nowStay = maps.getCellBlackFigure().get(figure);
+        if (knightCanMove(digraph, nowStay, nextStay)) {
             if (maps.getWhiteFigure().get(nextStay) != null || maps.getBlackFigure().get(nextStay) == null) {
                 maps.moveFigure(figure, nextStay);
                 System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
@@ -526,6 +598,11 @@ public class ChessUtils {
         System.out.println("The Knight cannot go here");
         return false;
     }
+
+    /**
+     * The logic of the black and white pawns differs only in the direction of movement.
+     * Also, a pawn can move two cells in certain places and turn into any piece if it reaches the end
+     **/
 
     private static boolean movePawn(Figure figure, String[] moves, Digraph digraph, Maps maps, boolean isBlack) {
         if (isBlack) {
@@ -543,9 +620,9 @@ public class ChessUtils {
             return false;
         }
         nowStay = maps.getCellBlackFigure().get(figure);
-        int checkNextStay = toEdge.get(moves[1]);
+        int checkNextStay = Constant.toEdge(moves[1]);
         if (moves[0].charAt(0) == moves[1].charAt(0)) {
-            nextStay = toEdge.get(moves[1]);
+            nextStay = Constant.toEdge(moves[1]);
         } else if (checkNextStay == digraph.getDownRight(digraph.getDown(nowStay))) {
             nextStay = digraph.getDownRight(digraph.getDown(nowStay));
         } else if (checkNextStay == digraph.getDownLeft(digraph.getDown(nowStay))) {
@@ -555,14 +632,14 @@ public class ChessUtils {
         }
         if (nextStay != -1 && moves[0].charAt(0) == moves[1].charAt(0)) {
             if (maps.getWhiteFigure().get(nextStay) == null && maps.getBlackFigure().get(nextStay) == null) {
-                if(digraph.getDown(nowStay) == nextStay) {
+                if (digraph.getDown(nowStay) == nextStay) {
                     maps.moveFigure(figure, nextStay);
                     System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
                     if (digraph.getDown(nextStay) == -1) {
-                        maps.setFigure(pawnConversion(nextStay, false), nextStay);
+                        maps.setFigure(pawnConversion(false), nextStay);
                     }
                     return true;
-                }else if(digraph.getDown(digraph.getDown(nowStay)) == nextStay && (nowStay == 82 || nowStay == 72 || nowStay == 62 || nowStay == 52 || nowStay == 64 || nowStay == 76 || nowStay == 88)){
+                } else if (digraph.getDown(digraph.getDown(nowStay)) == nextStay && (nowStay == 82 || nowStay == 72 || nowStay == 62 || nowStay == 52 || nowStay == 64 || nowStay == 76 || nowStay == 88)) {
                     maps.moveFigure(figure, nextStay);
                     System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
                     return true;
@@ -593,9 +670,9 @@ public class ChessUtils {
             return false;
         }
         nowStay = maps.getCellWhiteFigure().get(figure);
-        int checkNextStay = toEdge.get(moves[1]);
+        int checkNextStay = Constant.toEdge(moves[1]);
         if (moves[0].charAt(0) == moves[1].charAt(0)) {
-            nextStay = toEdge.get(moves[1]);
+            nextStay = Constant.toEdge(moves[1]);
         } else if (checkNextStay == digraph.getUpRight(digraph.getUp(nowStay))) {
             nextStay = digraph.getUpRight(digraph.getUp(nowStay));
         } else if (checkNextStay == digraph.getUpLeft(digraph.getUp(nowStay))) {
@@ -605,14 +682,14 @@ public class ChessUtils {
         }
         if (nextStay != -1 && moves[0].charAt(0) == moves[1].charAt(0)) {
             if (maps.getBlackFigure().get(nextStay) == null && maps.getWhiteFigure().get(nextStay) == null) {
-                if(digraph.getUp(nowStay) == nextStay) {
+                if (digraph.getUp(nowStay) == nextStay) {
                     maps.moveFigure(figure, nextStay);
                     System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
                     if (digraph.getUp(nextStay) == -1) {
-                        maps.setFigure(pawnConversion(nextStay, false), nextStay);
+                        maps.setFigure(pawnConversion(false), nextStay);
                     }
                     return true;
-                }else if(digraph.getUp(digraph.getUp(nowStay)) == nextStay && nowStay >= 16 && nowStay <= 25){
+                } else if (digraph.getUp(digraph.getUp(nowStay)) == nextStay && nowStay >= 16 && nowStay <= 25) {
                     maps.moveFigure(figure, nextStay);
                     System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
                     return true;
@@ -635,7 +712,11 @@ public class ChessUtils {
         return false;
     }
 
-    private static Figure pawnConversion(int stayNow, boolean isBlack) {
+    /**
+     * Here is the choice of the piece that the pawn turns into
+     **/
+
+    private static Figure pawnConversion(boolean isBlack) {
         System.out.print("Choose a shape from the list:\n" +
                 "    Queen\n    Bishop\n    Rook\n    Knight\nYour Choose: ");
         Scanner scanner = new Scanner(System.in);
@@ -667,5 +748,89 @@ public class ChessUtils {
                     }
             }
         }
+    }
+
+    private static List<Integer> getDirectionHorizontalAndVerticalLines(Maps maps, Digraph digraph, int nextStay, int nowStay) {
+        int bufferNowStay;
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            bufferNowStay = nowStay;
+            do {
+                switch (i) {
+                    case 0:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getUp(bufferNowStay);
+                        break;
+                    case 1:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getUpRight(bufferNowStay);
+                        break;
+                    case 2:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownRight(bufferNowStay);
+                        break;
+                    case 3:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDown(bufferNowStay);
+                        break;
+                    case 4:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownLeft(bufferNowStay);
+                        break;
+                    case 5:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getUpLeft(bufferNowStay);
+                        break;
+                }
+                if (bufferNowStay == nextStay) {
+                    return list;
+                }else {
+                    list.clear();
+                }
+            } while (maps.getFigures().get(bufferNowStay) == null && bufferNowStay != -1);
+        }
+        return null;
+    }
+
+    private static List<Integer> getDirectionDiagonalLines(Maps maps, Digraph digraph, int nextStay, int nowStay) {
+        int bufferNowStay;
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            bufferNowStay = nowStay;
+            do {
+                switch (i) {
+                    case 0:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getUpRight(digraph.getUp(bufferNowStay));
+                        break;
+                    case 1:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getUpLeft(digraph.getUp(bufferNowStay));
+                        break;
+                    case 2:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownRight(digraph.getUpRight(bufferNowStay));
+                        break;
+                    case 3:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownLeft(digraph.getUpLeft(bufferNowStay));
+                        break;
+                    case 4:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownLeft(digraph.getDown(bufferNowStay));
+                        break;
+                    case 5:
+                        list.add(bufferNowStay);
+                        bufferNowStay = digraph.getDownRight(digraph.getDown(bufferNowStay));
+                        break;
+                }
+                if (bufferNowStay == nextStay) {
+                    return list;
+                }else {
+                    list.clear();
+                }
+            } while (maps.getFigures().get(bufferNowStay) == null && bufferNowStay != -1);
+        }
+        return null;
     }
 }

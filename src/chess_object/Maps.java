@@ -1,6 +1,5 @@
-package ChessObject;
+package chess_object;
 
-import Graph.GraphUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +18,20 @@ public class Maps {
     }
 
     private void test() {
-        addFigureOnBoardBlack(new Pawn(false), 52);
-        addFigureOnBoardBlack(new Pawn(false), 65);
+        addFigureOnBoardWhite(new King(true), 20);
+        addFigureOnBoardWhite(new Pawn(true), 12);
+        addFigureOnBoardWhite(new Pawn(true), 21);
+        addFigureOnBoardWhite(new Pawn(true), 31);
+        addFigureOnBoardWhite(new Pawn(true), 30);
+        addFigureOnBoardWhite(new Pawn(true), 29);
+        addFigureOnBoardWhite(new Pawn(true), 19);
+        addFigureOnBoardWhite(new Pawn(true), 11);
+        addFigureOnBoardWhite(new Pawn(true), 28);
+        addFigureOnBoardWhite(new Pawn(true), 40);
+        addFigureOnBoardWhite(new Pawn(true), 42);
+        addFigureOnBoardWhite(new Pawn(true), 32);
+        addFigureOnBoardWhite(new Rook(true), 3);
+        addFigureOnBoardBlack(new Bishop(false), 8);
     }
 
     public void setFigure(Figure figure, int edge) {
@@ -76,7 +87,7 @@ public class Maps {
         addFigureOnBoardWhite(new Knight(true), 8);
         addFigureOnBoardWhite(new Knight(true), 4);
         addFigureOnBoardWhite(new Queen(true), 1);
-        addFigureOnBoardWhite(new Knight(true), 3);
+        addFigureOnBoardWhite(new King(true), 3);
         addFigureOnBoardWhite(new Bishop(true), 0);
         addFigureOnBoardWhite(new Bishop(true), 2);
         addFigureOnBoardWhite(new Bishop(true), 6);
