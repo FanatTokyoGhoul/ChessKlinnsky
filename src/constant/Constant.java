@@ -5,12 +5,13 @@ import java.util.Map;
 
 public class Constant {
     private static final Map<String, Integer> toEdge = new HashMap<>();
+    private static final Map<Integer, String> toChessCoord = new HashMap<>();
 
     static {
         toEdge.put("a1", 25);
         toEdge.put("a2", 36);
         toEdge.put("a3", 47);
-        toEdge.put("a4", 59);
+        toEdge.put("a4", 58);
         toEdge.put("a5", 69);
         toEdge.put("a6", 80);
         toEdge.put("b1", 16);
@@ -79,7 +80,7 @@ public class Constant {
         toEdge.put("h9", 87);
         toEdge.put("i1", 15);
         toEdge.put("i2", 23);
-        toEdge.put("i3", 32);
+        toEdge.put("i3", 33);
         toEdge.put("i4", 44);
         toEdge.put("i5", 55);
         toEdge.put("i6", 66);
@@ -98,9 +99,18 @@ public class Constant {
         toEdge.put("l4", 68);
         toEdge.put("l5", 79);
         toEdge.put("l6", 90);
+
+        for(Map.Entry<String, Integer> keyAndValue : toEdge.entrySet()){
+            toChessCoord.put(keyAndValue.getValue(), keyAndValue.getKey());
+        }
+        System.out.println();
     }
 
     public static Integer toEdge(String chessCoordinates){
         return toEdge.get(chessCoordinates);
+    }
+
+    public static String toChessCoord(Integer edge){
+        return toChessCoord.get(edge);
     }
 }

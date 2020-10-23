@@ -1,14 +1,14 @@
 package chess_object;
 
-public class Bishop implements Figure{
-    private boolean isWhite;
+public class Bishop extends Figure{
+    private final String icon;
 
     public Bishop(boolean isWhite) {
-        this.isWhite = isWhite;
+        this.icon = isWhite ? "♝":"♗";
     }
 
     @Override
     public String toString() {
-        return isWhite ? "♝":"♗";
+        return icon;
     }
 }

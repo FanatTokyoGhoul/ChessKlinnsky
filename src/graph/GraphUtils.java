@@ -1,5 +1,7 @@
 package graph;
 
+import chess_object.Direction;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,21 +9,25 @@ import java.util.Scanner;
 /** Class with different methods for working with the graph**/
 public class GraphUtils {
     //Method for read graph from file
-    public static Digraph digraphParser(){
-        Digraph digraph = new AdjListsDigraph();
+    public static AdjListChessDigraph digraphParser(){
+        AdjListChessDigraph digraph = new AdjListChessDigraph();
         try {
+            int counter = 0;
             Scanner scanFile = new Scanner(new FileReader(new File("Graph/Graph.txt")));
             while (scanFile.hasNextLine()){
                 String[] arrayString = scanFile.nextLine().split(" ");
+                counter++;
 
                 for(int i = 1; i < arrayString.length; i++){
-                    digraph.addAdge(Integer.parseInt(arrayString[0]) - 1, Integer.parseInt(arrayString[i]) - 1);
+                    String[] edge = arrayString[i].split(";");
+                    digraph.addEdge(arrayString[0], edge[2], new Direction(Integer.parseInt(edge[1])), "d".equals(edge[0]));
                 }
 
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        digraph.createDiagonal();
         return digraph;
     }
 }

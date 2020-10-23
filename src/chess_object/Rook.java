@@ -1,14 +1,14 @@
 package chess_object;
 
-public class Rook implements Figure {
-    private boolean isWhite;
+public class Rook extends Figure {
+    private final String icon;
 
     public Rook(boolean isWhite) {
-        this.isWhite = isWhite;
+        this.icon = isWhite ? "♜":"♖";
     }
 
     @Override
     public String toString() {
-        return isWhite ? "♜":"♖";
+        return icon;
     }
 }

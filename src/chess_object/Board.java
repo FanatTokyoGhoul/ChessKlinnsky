@@ -1,10 +1,12 @@
 package chess_object;
 
+import constant.Constant;
+import graph.AdjListChessDigraph;
 import graph.Digraph;
 import graph.GraphUtils;
 
 public class Board {
-    private Digraph board;
+    private AdjListChessDigraph board;
     private Maps maps = new Maps();
 
     public Board() {
@@ -12,7 +14,7 @@ public class Board {
     }
 
     public void test(){
-        boolean test = ChessUtils.isMate(true, maps, board);
+        boolean test = ChessUtils.isMate(maps.getWhiteKing(),maps,board);
         System.out.println(this.toString());
         System.out.println(test);
     }
@@ -21,11 +23,11 @@ public class Board {
     public String toString() {
         String[] f = new String[91];
         for (int i = 0; i < f.length; i++){
-            if(maps.getFigures().get(i) == null){
+            if(maps.getFigures().get(Constant.toChessCoord(i)) == null){
                 f[i] = " ";
                 continue;
             }
-            f[i] = maps.getFigures().get(i).toString();
+            f[i] = maps.getFigures().get(Constant.toChessCoord(i)).toString();
         }
         return "          11 _ 11\n" +
                 "        10 _/" + f[85] + "\\_ 10\n" +

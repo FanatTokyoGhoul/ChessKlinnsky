@@ -1,14 +1,14 @@
 package chess_object;
 
-public class Pawn implements Figure {
-    private boolean isWhite;
+public class Pawn extends Figure {
+    private final String icon;
 
     public Pawn(boolean isWhite) {
-        this.isWhite = isWhite;
+        this.icon = isWhite ? "♟":"♙";
     }
 
     @Override
     public String toString() {
-        return isWhite ? "♟":"♙";
+        return icon;
     }
 }
