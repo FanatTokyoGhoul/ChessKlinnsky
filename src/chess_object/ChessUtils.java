@@ -230,8 +230,6 @@ public class ChessUtils {
     }
 
     private static boolean checkDiagonalLines(Maps maps, AdjListChessDigraph digraph, String nextStay, String nowStay, boolean isKing) {
-        Map<String, Figure> attack = maps.getBlackFigure().get(nowStay) == null ? maps.getWhiteFigure() : maps.getBlackFigure();
-        Map<String, Figure> def = maps.getBlackFigure().get(nowStay) != null ? maps.getWhiteFigure() : maps.getBlackFigure();
         Map<String, Figure> figures = maps.getFigures();
 
         boolean limiter;

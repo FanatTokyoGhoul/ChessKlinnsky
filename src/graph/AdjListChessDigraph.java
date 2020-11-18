@@ -14,22 +14,6 @@ public class AdjListChessDigraph {
     int vCountDiagonal;
     int eCountDiagonal;
 
-    private static Iterable<Integer> nullIterable = new Iterable<Integer>() {
-        @Override
-        public Iterator<Integer> iterator() {
-            return new Iterator<Integer>() {
-                @Override
-                public boolean hasNext() {
-                    return false;
-                }
-
-                @Override
-                public Integer next() {
-                    return null;
-                }
-            };
-        }
-    };
 
     public Map<Direction, String> getCellHorizontalAndVertical(String v1){
         return verticalAndHorizontal.get(v1);
