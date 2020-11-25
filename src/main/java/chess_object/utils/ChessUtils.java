@@ -402,6 +402,9 @@ public class ChessUtils {
         if (next.equals(moves[1]) && attackPlayer.getFigures().get(next) == null) {
             moveFigure(figure, next, attackPlayer, defendPlayer, maps);
             System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+            if (digraph.getCellHorizontalAndVertical(next).get(new Direction(direction.getDirection())) == null) {
+                setFigure(pawnConversion(direction.getDirection() == Direction.DOWN, attackPlayer instanceof BotPlayer), next, attackPlayer, maps);
+            }
             return true;
         }
 
@@ -410,6 +413,9 @@ public class ChessUtils {
         if (next.equals(moves[1]) && attackPlayer.getFigures().get(next) == null) {
             moveFigure(figure, next, attackPlayer, defendPlayer, maps);
             System.out.println("Way " + moves[0] + " " + moves[1] + " was successful.");
+            if (digraph.getCellHorizontalAndVertical(next).get(new Direction(direction.getDirection())) == null) {
+                setFigure(pawnConversion(direction.getDirection() == Direction.DOWN, attackPlayer instanceof BotPlayer), next, attackPlayer, maps);
+            }
             return true;
         }
 
@@ -511,7 +517,7 @@ public class ChessUtils {
             } while (figures.get(bufferedNowStay) == null);
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     /**

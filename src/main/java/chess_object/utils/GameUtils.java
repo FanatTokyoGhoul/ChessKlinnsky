@@ -57,6 +57,9 @@ public class GameUtils {
                 MoveAndScore buffer = new MoveAndScore();
                 buffer.move = player.getCells().get(figure) + " " + move;
                 buffer.score = getScore(figure, move, player, notMovePlayer, maps, digraph);
+                if(figure instanceof Pawn){
+                    buffer.score++;
+                }
                 movesAndScores.add(buffer);
             }
 
@@ -96,6 +99,8 @@ public class GameUtils {
                 }
                 return 1000;
             }
+        }else {
+            return Integer.MIN_VALUE;
         }
 
 
@@ -123,8 +128,6 @@ public class GameUtils {
                 }
             }
         }
-
-        List<String> moves = ChessUtils.getMovesFigure(figure, player, maps, digraph);
 
         enemyKillScore = 0;
 

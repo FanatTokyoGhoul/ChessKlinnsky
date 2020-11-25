@@ -11,7 +11,7 @@ import player.RealPlayer;
 public class Board {
     private AdjListChessDigraph board;
     private Player player;
-    private Player firstPlayer = new RealPlayer("Антон", new Direction(Direction.UP));
+    private Player firstPlayer = new BotPlayer("Антон", new Direction(Direction.UP));
     private Player secondPlayer = new BotPlayer("Георгий", new Direction(Direction.DOWN));
     private Maps maps = new Maps();
 
