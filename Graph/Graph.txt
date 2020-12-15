@@ -1,1 +1,91 @@
-0 1 2 3
+f1 h;0;f2 h;1;g1 h;5;e1
+e1 h;0;e2 h;1;f2 h;2;f1 h;5;d1
+f2 h;0;f3 h;1;g2 h;2;g1 h;3;f1 h;4;e1 h;5;e2
+g1 h;0;g2 h;1;h1 h;4;f1 h;5;f2
+d1 h;0;d2 h;1;e2 h;2;e1 h;5;c1
+e2 h;0;e3 h;1;f3 h;2;f2 h;3;e1 h;4;d1 h;5;d2
+f3 h;0;f4 h;1;g3 h;2;g2 h;3;f2 h;4;e2 h;5;e3
+g2 h;0;g3 h;1;h2 h;2;h1 h;3;g1 h;4;f2 h;5;f3
+h1 h;0;h2 h;10;i1 h;4;g1 h;5;g2
+c1 h;0;c2 h;1;d2 h;2;d1 h;5;b1
+d2 h;0;d3 h;1;e3 h;2;e2 h;3;d1 h;4;c1 h;5;c2
+e3 h;0;e4 h;1;f4 h;2;f3 h;3;e2 h;4;d2 h;5;d3
+f4 h;0;f5 h;1;g4 h;2;g3 h;3;f3 h;4;e3 h;5;e4
+g3 h;0;g4 h;1;h3 h;2;h2 h;3;g2 h;4;f3 h;5;f4
+h2 h;0;h3 h;1;i2 h;2;i1 h;3;h1 h;4;g2 h;5;g3
+i1 h;0;i2 h;1;k1 h;4;h1 h;5;h2
+b1 h;0;b2 h;1;c2 h;2;c1 h;5;a1
+c2 h;0;c3 h;1;d3 h;2;d2 h;3;c1 h;4;b1 h;5;b2
+d3 h;0;d4 h;1;e4 h;2;e3 h;3;d2 h;4;c2 h;5;c3
+e4 h;0;e5 h;1;f5 h;2;f4 h;3;e3 h;4;d3 h;5;d4
+f5 h;0;f6 h;1;g5 h;2;g4 h;3;f4 h;4;e4 h;5;e5
+g4 h;0;g5 h;1;h4 h;2;h3 h;3;g3 h;4;f4 h;5;f5
+h3 h;0;h4 h;1;i3 h;2;i2 h;3;h2 h;4;g3 h;5;g4
+i2 h;0;i3 h;1;k2 h;2;k1 h;3;i1 h;4;h2 h;5;h3
+k1 h;0;k2 h;1;l1 h;4;i1 h;5;i2
+a1 h;0;a2 h;1;b2 h;2;b1
+b2 h;0;b3 h;1;c3 h;2;c2 h;3;b1 h;4;a1 h;5;a2
+c3 h;0;c4 h;1;d4 h;2;d3 h;3;c2 h;4;b2 h;5;b3
+d4 h;0;d5 h;1;e5 h;2;e4 h;3;d3 h;4;c2 h;5;c4
+e5 h;0;e6 h;1;f6 h;2;f5 h;3;e4 h;4;d4 h;5;d5
+f6 h;0;f7 h;1;g6 h;2;g5 h;3;f5 h;4;e5 h;5;e6
+g5 h;0;g6 h;1;h5 h;2;h4 h;3;g4 h;4;f5 h;5;f6
+h4 h;0;h5 h;1;i4 h;2;i3 h;3;h3 h;4;g4 h;5;g5
+i3 h;0;i4 h;1;k3 h;2;k2 h;3;i2 h;4;h3 h;5;h4
+k2 h;0;k3 h;1;l2 h;2;l1 h;3;k1 h;4;i2 h;5;i3
+l1 h;0;l2 h;4;k1 h;5;k2
+a2 h;0;a3 h;1;b3 h;2;b2 h;3;a1
+b3 h;0;b4 h;1;c4 h;2;c3 h;3;b2 h;4;a2 h;5;a3
+c4 h;0;c5 h;1;d5 h;2;d4 h;3;c3 h;4;b3 h;5;b4
+d5 h;0;d6 h;1;e6 h;2;e5 h;3;d4 h;4;c4 h;5;c5
+e6 h;0;e7 h;1;f7 h;2;f6 h;3;e5 h;4;d5 h;5;d6
+f7 h;0;f8 h;1;g7 h;2;g6 h;3;f6 h;4;e6 h;5;e7
+g6 h;0;g7 h;1;h6 h;2;h5 h;3;g5 h;4;f6 h;5;f7
+h5 h;0;h6 h;1;i5 h;2;i4 h;3;h4 h;4;g5 h;5;g6
+i4 h;0;i5 h;1;k4 h;2;k3 h;3;i3 h;4;h4 h;5;h5
+k3 h;0;k4 h;1;l3 h;2;l2 h;3;k2 h;4;i3 h;5;i4
+l2 h;0;l3 h;3;l1 h;4;k2 h;5;k3
+a3 h;0;a4 h;1;b4 h;2;b3 h;3;a2
+b4 h;0;b5 h;1;c5 h;2;c4 h;3;b3 h;4;a3 h;5;a4
+c5 h;0;c6 h;1;d6 h;2;d5 h;3;c4 h;4;b4 h;5;b5
+d6 h;0;d7 h;1;e7 h;2;e6 h;3;d5 h;4;c5 h;5;c6
+e7 h;0;e8 h;1;f8 h;2;f7 h;3;e6 h;4;d6 h;5;d7
+f8 h;0;f9 h;1;g8 h;2;g7 h;3;f7 h;4;e7 h;5;e8
+g7 h;0;g8 h;1;h7 h;2;h6 h;3;g6 h;4;f7 h;5;f8
+h6 h;0;h7 h;1;i6 h;2;i5 h;3;h5 h;4;g6 h;5;g7
+i5 h;0;i6 h;1;k5 h;2;k4 h;3;i4 h;4;h5 h;5;h6
+k4 h;0;k5 h;1;l4 h;2;l3 h;3;k3 h;4;i4 h;5;i5
+l3 h;0;l4 h;3;l2 h;4;k3 h;5;k4
+a4 h;0;a5 h;1;b5 h;2;b4 h;3;a3
+b5 h;0;b6 h;1;c6 h;2;c5 h;3;b4 h;4;a4 h;5;a5
+c6 h;0;c7 h;1;d7 h;2;d6 h;3;c5 h;4;b5 h;5;b6
+d7 h;0;d8 h;1;e8 h;2;e7 h;3;d6 h;4;c6 h;5;c7
+e8 h;0;e9 h;1;f9 h;2;f8 h;3;e7 h;4;d7 h;5;d8
+f9 h;0;f10 h;1;g9 h;2;g8 h;3;f8 h;4;e8 h;5;e9
+g8 h;0;g9 h;1;h8 h;2;h7 h;3;g7 h;4;f8 h;5;f9
+h7 h;0;h8 h;1;i7 h;2;i6 h;3;h6 h;4;g7 h;5;g8
+i6 h;0;i7 h;1;k6 h;2;k5 h;3;i5 h;4;h6 h;5;h7
+k5 h;0;k6 h;1;l5 h;2;l4 h;3;k4 h;4;i5 h;5;i6
+l4 h;0;l5 h;3;l3 h;4;k4 h;5;k5
+a5 h;0;a6 h;1;b6 h;2;b5 h;3;a4
+b6 h;0;b7 h;1;c7 h;2;c6 h;3;b5 h;4;a5 h;5;a6
+c7 h;0;c8 h;1;d8 h;2;d7 h;3;c6 h;4;b6 h;5;b7
+d8 h;0;d9 h;1;e9 h;2;e8 h;3;d7 h;4;c7 h;5;c8
+e9 h;0;e10 h;1;f10 h;2;f9 h;3;e8 h;4;d8 h;5;d9
+f10 h;0;f11 h;1;g10 h;2;g9 h;3;f9 h;4;e9 h;5;e10
+g9 h;0;g10 h;1;h9 h;2;h8 h;3;g8 h;4;f9 h;5;f10
+h8 h;0;h9 h;1;i8 h;2;i7 h;3;h7 h;4;g8 h;5;g9
+i7 h;0;i8 h;1;k7 h;2;k6 h;3;i6 h;4;h7 h;5;h8
+k6 h;0;k7 h;1;l6 h;2;l5 h;3;k5 h;4;i6 h;5;i7
+l5 h;0;l6 h;3;l4 h;4;k5 h;5;k6
+a6 h;1;b7 h;2;b6 h;3;a5
+b7 h;1;c8 h;2;c7 h;3;b6 h;4;a6
+c8 h;1;d9 h;2;d8 h;3;c7 h;4;b7
+d9 h;1;e10 h;2;e9 h;3;d8 h;4;c8
+e10 h;1;f11 h;2;f10 h;3;e9 h;4;d9
+f11 h;2;g10 h;3;f10 h;4;e10
+g10 h;2;h9 h;3;g9 h;4;f10 h;5;f11
+h9 h;2;i8 h;3;h8 h;4;i7 h;5;g10
+i8 h;2;k7 h;3;i7 h;4;h8 h;5;h9
+k7 h;2;l6 h;3;k6 h;4;i7 h;5;i8
+l6 h;3;l5 h;4;k6 h;5;k7
