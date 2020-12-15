@@ -1,0 +1,51 @@
+{
+  "counter": 0,
+  "firstPlayer": {
+    "name": "Антон",
+    "direction": 0,
+    "chess": [
+      "Pawn-e4",
+      "Rook-i1",
+      "Pawn-k1",
+      "Rook-c1",
+      "Knight-d1",
+      "Pawn-b1",
+      "Bishop-f2",
+      "Knight-h1",
+      "Pawn-d3",
+      "King-g1",
+      "Pawn-f5",
+      "Pawn-g4",
+      "Pawn-h3",
+      "Queen-e1",
+      "Bishop-f3",
+      "Pawn-i2",
+      "Bishop-f1",
+      "Pawn-c2"
+    ]
+  },
+  "secondPlayer": {
+    "name": "Георгий",
+    "direction": 3,
+    "chess": [
+      "Pawn-f7",
+      "Pawn-h7",
+      "Pawn-g7",
+      "Bishop-f11",
+      "Rook-i8",
+      "Bishop-f9",
+      "Pawn-e7",
+      "Bishop-f10",
+      "Queen-e10",
+      "Pawn-i7",
+      "King-g10",
+      "Pawn-d7",
+      "Rook-c8",
+      "Pawn-b7",
+      "Knight-d9",
+      "Knight-h9",
+      "Pawn-c7",
+      "Pawn-k7"
+    ]
+  }
+}
